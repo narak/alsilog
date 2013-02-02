@@ -1,0 +1,9 @@
+<% include header.ejs %>
+	<% for (var i in content) { %>
+	<article>
+		<div class="date"><i class="sprite icon-time"></i><%= content[i].timestamp %></div>
+		<h1><a href="<%= content[i].slug %>"><%= content[i].title %></a></h1>
+		<%- content[i].content.substring(0, 250) %>...
+	</article>
+	<% } %>
+<% include footer.html %>
