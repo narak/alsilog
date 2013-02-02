@@ -41,3 +41,5 @@ exports.templates = {
 	notFound	: '404',
 	admin		: 'admin'
 };
+
+exports.dateFormat = 'd S mmmm, yyyy at H:MM';

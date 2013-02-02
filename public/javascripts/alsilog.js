@@ -1,1 +1,2 @@
-console.log('Alsilog.js Loaded');
+// Alsilog name space.
+var alsi = alsi || {};
