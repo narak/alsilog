@@ -19,6 +19,17 @@ h1 {
   line-height: 1.2em;
   margin: 0.2em 0 0.8em;
 }
+a {
+  color: #567890;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #333;
+}
 article {
   margin: 0 0 40px;
 }
