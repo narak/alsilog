@@ -3,30 +3,40 @@
 */
 
 if (process.env.NODE_ENV == 'production') {
+	 // appfog environment variable
 	var env = JSON.parse(process.env.VCAP_SERVICES),
-	// appfog env
-	    afEnv = env['mysql-5.1'][0]['credentials'];
-
-	exports.db = {
-		lib	 	: 'mysql-lib',
-		hostname    : afEnv.hostname,
-		port 	 	: afEnv.port,
-		username    : afEnv.username,
-		password 	: afEnv.password,
+	    mysqlAfEnv = env['mysql-5.1'][0]['credentials'],
+	    redisAfEnv = env['redis-2.2'][0]['credentials'];
+	exports.db = {};
+	exports.db['mysql'] = {
+		lib	 		: 'mysql-lib',
+		hostname    : mysqlAfEnv.hostname,
+		port 	 	: mysqlAfEnv.port,
+		username    : mysqlAfEnv.username,
+		password 	: mysqlAfEnv.password,
 		database 	: 'alsilog_site'
+	};
+	exports.db['redis'] = {
+		hostname    : redisAfEnv.hostname,
+		port 	 	: redisAfEnv.port
 	};
 	exports.locals = {
 		title: 'Home',
 		baseUrl: 'http://alsilog.com'
 	};
 } else {
-	exports.db = {
+	exports.db = {};
+	exports.db['mysql'] = {
 		lib	 	: 'mysql-lib',
 		hostname 	: 'localhost',
 		port		: '3306',
 		username 	: 'alsilog',
 		password 	: 'alsilog',
 		database	: 'alsilog'
+	};
+	exports.db['redis'] = {
+		hostname    : 'localhost',
+		port 	 	: '6379'
 	};
 	exports.locals = {
 	    title: 'Home',

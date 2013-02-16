@@ -9,6 +9,8 @@
     "ejs": "*",
     "stylus": "*",
     "mysql": "*",
-    "marked": "*"
+    "redis": "*",
+    "marked": "*",
+    "connect-redis": "*"
   }
 }

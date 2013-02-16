@@ -1,6 +1,6 @@
 
 var conf = require('../config'),
-	db = require('../' + conf.db.lib),
+	db = require('../' + conf.db['mysql'].lib),
 	alsiDate = require('../public/javascripts/date'),
 	// Markdown parser.
 	marked = require('marked');

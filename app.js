@@ -5,26 +5,42 @@
 
 var express = require('express'),
     http = require('http'),
-    path = require('path'),
+    RedisStore = require('connect-redis')(express),
+    redis = require("redis").createClient(),
+
     conf = require('./config'),
-    content = require('./routes/content');
+    content = require('./routes/content'),
+    admin = require('./routes/admin');
 
 var app = express();
 
 // Setting up the defaults.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.favicon());
+/*app.use(express.favicon());*/
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-/*app.use(express.cookieParser('your secret here'));
-app.use(express.session());*/
+app.use(express.cookieParser());
+app.use(express.session({
+  secret: "aef61884dffcfe026143916ac5ec1c88223670f6",
+  store: new RedisStore({
+    host: conf.db['redis'].hostname,
+    port: conf.db['redis'].port,
+    client: redis
+  }),
+  cookie: {
+    secure: true,
+    path: '/',
+    httpOnly: true,
+  }
+}));
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
 app.use(express.errorHandler());
 app.locals(conf.locals);
+
 
 // Error handling.
 // This handles 404 because its the default route handler. If non of the other routes
@@ -53,6 +69,9 @@ app.use(function(req, res, next){
 app.get('/', content.index);
 // Url slug passed to route.
 app.get('/:slug', content.slug);
+// Admin routes
+app.get('/admin', admin.login);
+app.post('/admin', admin.loginSubmit);
 
 /*app.get('/404', function(req, res, next){
   // trigger a 404 since no other middleware
