@@ -10,14 +10,14 @@ var express = require('express'),
 
     conf = require('./config'),
     content = require('./routes/content'),
-    admin = require('./routes/admin');
+    admin = require('./routes/admin'),
+    auth = require('./auth');
 
 var app = express();
 
 // Setting up the defaults.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-/*app.use(express.favicon());*/
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -28,12 +28,7 @@ app.use(express.session({
     host: conf.db['redis'].hostname,
     port: conf.db['redis'].port,
     client: redis
-  }),
-  cookie: {
-    secure: true,
-    path: '/',
-    httpOnly: true,
-  }
+  })
 }));
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
@@ -70,25 +65,13 @@ app.get('/', content.index);
 // Url slug passed to route.
 app.get('/:slug', content.slug);
 // Admin routes
-app.get('/admin', admin.login);
-app.post('/admin', admin.loginSubmit);
+app.post('/admin/login', auth.loginUser);
+app.get('/admin/logout', auth.logoutUser);
 
-/*app.get('/404', function(req, res, next){
-  // trigger a 404 since no other middleware
-  // will match /404 after this one, and we're not
-  // responding here
-  next();
-});
-app.get('/403', function(req, res, next){
-  // trigger a 403 error
-  var err = new Error('not allowed!');
-  err.status = 403;
-  next(err);
-});
-app.get('/500', function(req, res, next){
-  // trigger a generic (500) error
-  next(new Error('keyboard cat!'));
-});*/
+// Check if logged in on all admin/* routes.
+app.all('/admin*', auth.requireLogin);
+app.all('/admin', admin.index);
+app.get('/admin/:slug', admin.slug);
 
 if (!module.parent) {
   app.listen(process.env.VCAP_APP_PORT || 3000);

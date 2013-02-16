@@ -22,7 +22,7 @@ exports.get = function() {
 exports.findAll = function(callback, error) {
 	conn.query(
 		"SELECT * FROM content ORDER BY timestamp DESC LIMIT 0, 10",
-		function(err, rows, fields) {
+		function(err, rows) {
 			if (err) throw err;
 			if (rows.length > 0) {
 				callback(rows);
@@ -39,7 +39,7 @@ exports.findAll = function(callback, error) {
 exports.findAllBlogs = function(callback, error) {
 	conn.query(
 		"SELECT * FROM content WHERE type='blog' ORDER BY timestamp DESC LIMIT 0, 10",
-		function(err, rows, fields) {
+		function(err, rows) {
 			if (err) throw err;
 			if (rows.length > 0) {
 				callback(rows);
@@ -59,9 +59,28 @@ exports.getBySlug = function(slug, callback, error) {
 		{
 			slug: slug
 		},
-		function(err, rows, fields) {
+		function(err, rows) {
 			if (err) throw err;
 			if (rows.length > 0) {
+				callback(rows[0]);
+			} else {
+				error();
+			}
+		}
+	);
+};
+
+/*
+	Callback is provided the user object if valid.
+*/
+exports.loginUser = function(email, password, callback, error) {
+	var query = 'SELECT * FROM users WHERE email = "' + email
+		+ '" AND password = "' + password + '"';
+	conn.query(
+		query,
+		function(err, rows) {
+			if (err) throw err;
+			if (rows.length == 1) {
 				callback(rows[0]);
 			} else {
 				error();

@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alsilog | sign in</title>
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <base href="<%= baseUrl %>/admin" />
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/admin.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+      <form class="form-signin" method="post" action="admin/login">
+        <h2 class="form-signin-heading">Alsilog Admin</h2>
+        <% if (typeof error !== 'undefined' && error == 'INVALID_USER_PASS') { %>
+          <div class="alert alert-error">
+            How about getting it right time the first time, eh? Now I'm locking your account. Bye.
+          </div>
+        <% } %>
+        <input type="text" class="input-block-level" name="email" placeholder="Email address">
+        <input type="password" class="input-block-level" name="password" placeholder="Password">
+        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+      </form>
+    </div>
+  </body>
+</html>

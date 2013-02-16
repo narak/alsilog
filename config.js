@@ -49,7 +49,10 @@ exports.templates = {
 	blog		: 'blog',
 	index		: 'index',
 	notFound	: '404',
-	admin		: 'admin'
+	admin		: 'admin',
+	error 		: 'error',
+	login 		: 'login',
+	pageEdit	: 'page_edit'
 };
 
 exports.dateFormat = 'd S mmmm, yyyy at H:MM';
