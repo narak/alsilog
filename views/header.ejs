@@ -14,7 +14,7 @@
 <div id="wrapper">
 	<div id="fixed-nav">
 		<header>
-			<a href="/"><i class="sprite" id="sprite-logo"></i></a>
+			<a class="ajaxify" data-type="index" href="/"><i class="sprite" id="sprite-logo"></i></a>
 			<div id="logo-text">
 				<strong>Karan Sheth</strong><br />
 				coder, musician, design enthusiast
@@ -22,10 +22,10 @@
 		</header>
 		<nav>
 			<ul id="main-nav">
-				<li><a href="<%= baseUrl %>/about" class="nav">about</a></li>
-				<li><a href="<%= baseUrl %>/archives" class="nav">archives</a></li>
-				<li><a href="<%= baseUrl %>/colophon" class="nav">colophon</a></li>
-				<li><a href="<%= baseUrl %>/resume" class="nav">résumé</a></li>
+				<li><a class="ajaxify nav" data-type="single" href="about">about</a></li>
+				<li><a class="ajaxify nav" data-type="single" href="archives">archives</a></li>
+				<li><a class="ajaxify nav" data-type="single" href="colophon">colophon</a></li>
+				<li><a class="ajaxify nav" data-type="single" href="resume">résumé</a></li>
 			</ul>
 		</nav>
 		<p>

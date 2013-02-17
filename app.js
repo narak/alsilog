@@ -8,19 +8,13 @@ var express = require('express'),
     RedisStore = require('connect-redis')(express),
     redis = require("redis").createClient(),
 
+    view = require('./view-util'),
     conf = require('./config'),
     content = require('./routes/content'),
     admin = require('./routes/admin'),
     auth = require('./auth');
 
 var app = express();
-
-// Overloading app.render.
-app.renderSimple = app.render;
-app.render = function(name, options, fn) {
-  console.log('Rendering: ' + name);
-  app.renderSimple(name, options, fn)
-};
 
 // Setting up the defaults.
 app.set('views', __dirname + '/views');
@@ -49,16 +43,7 @@ app.locals(conf.locals);
 // match, this handler is called and it assumes 404.
 app.use(function(req, res, next){
   res.status(404);
-  if (req.accepts('html')) {
-    res.render(conf.templates.notFound, { url: req.url });
-    return;
-  }
-  if (req.accepts('json')) {
-    res.send({ error: 'Not found' });
-    return;
-  }
-  // default to plain-text. send()
-  res.type('txt').send('Not found');
+  view.render(req, res, conf.templates.notFound, { error: 'Page Not Found', url: req.url });
 });
 
 // Method signature that invokes error handler.
