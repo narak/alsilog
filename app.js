@@ -15,6 +15,13 @@ var express = require('express'),
 
 var app = express();
 
+// Overloading app.render.
+app.renderSimple = app.render;
+app.render = function(name, options, fn) {
+  console.log('Rendering: ' + name);
+  app.renderSimple(name, options, fn)
+};
+
 // Setting up the defaults.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

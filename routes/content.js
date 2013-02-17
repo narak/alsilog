@@ -1,4 +1,3 @@
-
 var conf = require('../config'),
 	db = require('../' + conf.db['mysql'].lib),
 	alsiDate = require('../public/javascripts/date'),

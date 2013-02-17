@@ -4,8 +4,9 @@ var conf = require('./config'),
 
 exports.requireLogin = function(req, res, next) {
 	console.info("Requiring login.")
-	if (req.session.isLoggedIn == true &&
-		req.session.email.length > 0) {
+	if (typeof req.session !== 'undefined'
+		&& req.session.isLoggedIn == true
+		&& req.session.email.length > 0) {
 		next();
 	} else {
 	    res.render(conf.templates.login);

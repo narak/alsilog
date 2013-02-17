@@ -32,6 +32,9 @@ a {
 a:hover {
   color: #333;
 }
+a:active {
+  color: #f60;
+}
 
 a.footer {
   color: #d9d9d9;
