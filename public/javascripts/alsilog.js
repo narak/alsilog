@@ -21,9 +21,8 @@ require(['require', 'jquery', 'underscore', 'history'], function(require, $, _, 
 	};
 
 	// Bind to StateChange Event
-    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
-        var state = History.getState(); // Note: We are using History.getState() instead of event.state
-        History.log(state.data, state.title, state.url);
+    History.Adapter.bind(window,'statechange',function() {
+        var state = History.getState();
         ajaxify(state.data);
     });
 
