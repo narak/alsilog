@@ -23,7 +23,7 @@ require(['require', 'jquery', 'underscore', 'history'], function(require, $, _, 
 	// Bind to StateChange Event
     History.Adapter.bind(window,'statechange',function() {
         var state = History.getState();
-        ajaxify(state.data);
+        ajaxify(state.url, state.data);
     });
 
 	var view = (function() {
@@ -65,11 +65,17 @@ require(['require', 'jquery', 'underscore', 'history'], function(require, $, _, 
 		return exports;
 	})();
 
-	var ajaxify = function(state) {
-		$.getJSON(state.url, function(data) {
-			view.render(state.type, state.target, data);
-		});
-		return false;
+	var urlDataCache = {};
+	var ajaxify = function(url, state) {
+		if (typeof urlDataCache[url] === 'undefined') {
+			$.getJSON(url, function(data) {
+				urlDataCache[url] = data;
+				view.render(data.view, state.target, data.content);
+			});
+		} else {
+			var data = urlDataCache[url];
+			view.render(data.view, state.target, data.content);
+		}
 	};
 
     $(function() {
@@ -77,11 +83,10 @@ require(['require', 'jquery', 'underscore', 'history'], function(require, $, _, 
     		e.preventDefault();
     		var $this = $(this);
     		var state = {
-    			url: $this.attr('href'),
     			type: $this.data('type'),
     			target: $this.data('target')
     		};
-			History.pushState(state, $this.attr('title'), state.url);
+			History.pushState(state, $this.attr('title'), $this.attr('href'));
     	});
     });
 });
