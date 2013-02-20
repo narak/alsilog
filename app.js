@@ -25,6 +25,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
   secret: "aef61884dffcfe026143916ac5ec1c88223670f6",
+  cookie: {httpOnly: true, secure: true},
   store: new RedisStore({
     host: conf.db['redis'].hostname,
     port: conf.db['redis'].port,
