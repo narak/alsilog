@@ -30,7 +30,9 @@ require(['require', 'jquery', 'underscore', 'history'], function(require, $, _, 
 		var exports = {},
 			tplCache = {},
 			elCache = {},
-			defaultTarget = '#main-content';
+			defaultTarget = '#main-content',
+			titlePrepend = 'alsilog',
+			titleSep = ' | ';
 		var getTemplate = function(name, callback) {
 			if (typeof tplCache[name] === 'undefined') {
 				require(['text!templates/' + name + '.html'], function(html) {
@@ -56,6 +58,11 @@ require(['require', 'jquery', 'underscore', 'history'], function(require, $, _, 
 			getTemplate(view, function(template) {
 				var $el = getEl(target);
 				$el.fadeOut('fast', function() {
+					if (typeof data.title !== 'undefined') {
+						document.title = titlePrepend + titleSep + data.title;
+					} else {
+						document.title = titlePrepend;
+					}
 					getEl(target).html(template(data));
 					$el.fadeIn('fast');
 				});

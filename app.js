@@ -37,21 +37,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.errorHandler());
 app.locals(conf.locals);
 
-
-// Error handling.
-// This handles 404 because its the default route handler. If non of the other routes
-// match, this handler is called and it assumes 404.
-app.use(function(req, res, next){
-  res.status(404);
-  view.render(req, res, conf.templates.notFound, { error: 'Page Not Found', url: req.url });
-});
-
-// Method signature that invokes error handler.
-/*app.use(function(err, req, res, next){
-  res.status(err.status || 500);
-  res.render('500', { error: err, title: err });
-});*/
-
 // Routes
 app.get('/', content.index);
 // Url slug passed to route.
@@ -64,6 +49,20 @@ app.get('/admin/logout', auth.logoutUser);
 app.all('/admin*', auth.requireLogin);
 app.all('/admin', admin.index);
 app.get('/admin/:slug', admin.slug);
+
+// Error handling.
+// This handles 404 because its the default route handler. If non of the other routes
+// match, this handler is called and it assumes 404.
+app.use(function(req, res, next){
+  res.status(404);
+  view.render(req, res, conf.templates.notFound, { error: 'Page Not Found', url: req.url });
+});
+
+// Method signature that invokes error handler.
+app.use(function(err, req, res, next){
+  res.status(err.status || 500);
+  res.render('500', { error: err, title: err });
+});
 
 if (!module.parent) {
   app.listen(process.env.VCAP_APP_PORT || 3000);
