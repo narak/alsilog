@@ -5,13 +5,13 @@ var conf = require('../config'),
 	// Markdown parser.
 	marked = require('marked');
 
-exports.index = function(req, res) {
+exports.index = function(req, res, next) {
 	db.findAllBlogs(function(content) {
 		for (var i = 0; i < content.length; i++) {
 			content[i].date = alsiDate.formatDate(conf.dateFormat, content[i].timestamp);
 		}
 		view.render(req, res, conf.templates.index, {content: content});
-	});
+	}, next);
 };
 
 exports.slug = function(req, res, next) {

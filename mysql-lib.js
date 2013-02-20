@@ -14,12 +14,18 @@ var pool  = mysql.createPool({
 */
 exports.findAll = function(callback, error) {
 	pool.getConnection(function(err, conn) {
-		if (err) throw err;
+		if (err) {
+			error(err);
+			return;
+		}
 		conn.query(
 			"SELECT * FROM content ORDER BY timestamp DESC LIMIT 0, 10",
 			function(err, rows) {
 				conn.end();
-				if (err) throw err;
+				if (err) {
+					error(err);
+					return;
+				}
 				if (rows.length > 0) {
 					callback(rows);
 				} else {
@@ -35,12 +41,18 @@ exports.findAll = function(callback, error) {
 */
 exports.findAllBlogs = function(callback, error) {
 	pool.getConnection(function(err, conn) {
-		if (err) throw err;
+		if (err) {
+			error(err);
+			return;
+		}
 		conn.query(
 			"SELECT * FROM content WHERE type='blog' ORDER BY timestamp DESC LIMIT 0, 10",
 			function(err, rows) {
 				conn.end();
-				if (err) throw err;
+				if (err) {
+					error(err);
+					return;
+				}
 				if (rows.length > 0) {
 					callback(rows);
 				} else {
@@ -56,7 +68,10 @@ exports.findAllBlogs = function(callback, error) {
 */
 exports.getBySlug = function(slug, callback, error) {
 	pool.getConnection(function(err, conn) {
-		if (err) throw err;
+		if (err) {
+			error(err);
+			return;
+		}
 		conn.query(
 			"SELECT * FROM content WHERE ?",
 			{
@@ -64,7 +79,10 @@ exports.getBySlug = function(slug, callback, error) {
 			},
 			function(err, rows) {
 				conn.end();
-				if (err) throw err;
+				if (err) {
+					error(err);
+					return;
+				}
 				if (rows.length > 0) {
 					callback(rows[0]);
 				} else {
@@ -80,14 +98,20 @@ exports.getBySlug = function(slug, callback, error) {
 */
 exports.loginUser = function(email, password, callback, error) {
 	pool.getConnection(function(err, conn) {
-		if (err) throw err;
+		if (err) {
+			error(err);
+			return;
+		}
 		var query = 'SELECT * FROM users WHERE email = "' + email
 			+ '" AND password = "' + password + '"';
 		conn.query(
 			query,
 			function(err, rows) {
 				conn.end();
-				if (err) throw err;
+				if (err) {
+					error(err);
+					return;
+				}
 				if (rows.length == 1) {
 					callback(rows[0]);
 				} else {
