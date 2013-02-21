@@ -19,7 +19,6 @@ var app = express();
 // Setting up the defaults.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
@@ -33,7 +32,6 @@ app.use(express.session({
   })
 }));
 app.use(app.router);
-app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.errorHandler());
 app.locals(conf.locals);

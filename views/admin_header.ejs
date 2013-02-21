@@ -2,20 +2,19 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>alsilog | <%= title %></title>
+    <base href="<%= baseUrl %>/admin/" />
     <link rel="shortcut icon" href="images/favicon.png" />
-    <base href="<%= baseUrl %>/admin" />
-    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
-    <link href="../stylesheets/admin.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
+    <link href="../stylesheets/bootstrap.css" rel="stylesheet" />
+    <link href="../stylesheets/admin.css" rel="stylesheet" />
   </head>
 
   <body>
-
     <div class="container">
-
       <div class="masthead">
-
         <ul class="nav nav-pills pull-right">
           <li><a href="/admin"><i class="icon-home"></i> Home</a></li>
           <li><a href="admin/create"><i class="icon-pencil"></i> Create</a></li>
@@ -29,6 +28,6 @@
             </ul>
           </li>
         </ul>
-        <h3>alsilog <small>admin</small></h3>
+        <a href="/admin"><h3 class="muted">alsilog <small>admin</small></h3></a>
       </div>
       <hr>

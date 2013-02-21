@@ -1,7 +1,10 @@
 require.config({
     baseUrl: "javascripts",
     paths: {
-        "underscore": "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore"
+        "underscore": "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore",
+        "history": "vendor/history",
+        "date": "lib/date",
+        "view": "lib/view"
     },
     shim: {
         underscore: {
@@ -66,7 +69,7 @@ require(['require', 'jquery', 'underscore', 'history'], function (require, $, _,
                     } else {
                         document.title = titlePrepend;
                     }
-                    getEl(target).html(template(data));
+                    $el.html(template(data));
                     $el.fadeIn('fast');
                 });
             });

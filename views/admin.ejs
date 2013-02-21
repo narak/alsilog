@@ -1,10 +1,10 @@
 <% include admin_header.ejs %>
 
-      <div class="row-fluid">
+      <div class="row-fluid" id="main-content">
         <% for (var i in content) { %>
         <article class="span6">
           <time><i class="sprite icon-time"></i> <%= content[i].date %></time>
-          <h4><a href="<%= content[i].slug %>"><%= content[i].title %></a></h4>
+          <h4><a class="ajaxify" href="<%= content[i].slug %>"><%= content[i].title %></a></h4>
           <p><%- content[i].content.substring(0, 250) %>...</p>
         </article>
         <% } %>
