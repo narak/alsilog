@@ -36,8 +36,9 @@ require(['require', 'jquery', 'underscore', 'history', 'view', 'boostrap'], func
     });
 
     var urlDataCache = {};
-    var view;
+    var view = View();
     var ajaxify = function (url, state) {
+        state = state || {};
         if (urlDataCache[url] === undefined) {
             $.getJSON(url, function (data) {
                 urlDataCache[url] = data;
@@ -50,7 +51,7 @@ require(['require', 'jquery', 'underscore', 'history', 'view', 'boostrap'], func
     };
 
     $(function () {
-        view = View();
+        ajaxify(window.location.pathname);
         $(document).on('click', 'a.ajaxify', function (e) {
             e.preventDefault();
             var $this = $(this);

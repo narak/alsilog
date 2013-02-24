@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>alsilog | <%= title %></title>
     <base href="<%= baseUrl %>/admin/" />
-    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="shortcut icon" href="../images/favicon.png" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
     <link href="../stylesheets/bootstrap.css" rel="stylesheet" />
@@ -16,18 +16,27 @@
     <div class="container">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li><a href="/admin"><i class="icon-home"></i> Home</a></li>
-          <li><a href="admin/create"><i class="icon-pencil"></i> Create</a></li>
+          <li><a class="ajaxify" href="."><i class="icon-home"></i> Home</a></li>
+          <li><a class="ajaxify" href="create"><i class="icon-pencil"></i> Create</a></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="icon-user"></i> <i class="caret"></i>
             </a>
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-cog"></i> Account</a></li>
-              <li><a href="admin/logout"><i class="icon-off"></i> Logout</a></li>
+              <li><a href="logout"><i class="icon-off"></i> Logout</a></li>
             </ul>
           </li>
         </ul>
-        <a href="/admin"><h3 class="muted">alsilog <small>admin</small></h3></a>
+        <a class="ajaxify" href="/admin"><h3 class="muted">alsilog <small>admin</small></h3></a>
       </div>
       <hr>
+
+      <div id="main-content">
+      </div>
+      <hr>
+
+    </div>
+   <script data-main="../javascripts/admin" src="../javascripts/require-jquery.js"></script>
+  </body>
+</html>

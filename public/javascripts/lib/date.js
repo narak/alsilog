@@ -25,6 +25,7 @@ Formatting options:
 	yyyy - 4 digit year.
 */
 (function() {
+	'use strict';
 	var mmm = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	var mmmm = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	var ddd = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -179,7 +180,7 @@ Formatting options:
 					break;
 			}
 		}
-		return output;		
+		return output;
 	}
 })();
 

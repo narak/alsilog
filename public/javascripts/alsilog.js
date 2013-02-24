@@ -1,22 +1,28 @@
 require.config({
-    baseUrl: "javascripts",
+    baseUrl: '../javascripts',
     paths: {
-        "underscore": "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore",
-        "history": "vendor/history",
-        "date": "lib/date",
-        "view": "lib/view"
+        'underscore': 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore',
+        'history': 'vendor/history',
+        'view': 'lib/view',
     },
     shim: {
-        underscore: {
-            exports: '_'
+        'underscore': {
+            exports: '_',
+            init: function () {
+                _.templateSettings = {
+                    interpolate: /\{\{\=(.+?)\}\}/gim,
+                    evaluate: /\{\{(.+?)\}\}/gim
+                };
+                return _;
+            }
         },
-        history: {
+        'history': {
             exports: 'History'
         }
     }
 });
 
-require(['require', 'jquery', 'underscore', 'history'], function (require, $, _, History) {
+require(['require', 'jquery', 'underscore', 'history', 'view'], function (require, $, _, History, View) {
     'use strict';
 
     // Template tag for _.
@@ -31,52 +37,7 @@ require(['require', 'jquery', 'underscore', 'history'], function (require, $, _,
         ajaxify(state.url, state.data);
     });
 
-    var view = (function () {
-        var exports = {},
-            tplCache = {},
-            elCache = {},
-            defaultTarget = '#main-content',
-            titlePrepend = 'alsilog',
-            titleSep = ' | ';
-
-        var getTemplate = function (name, callback) {
-            if (tplCache[name] === undefined) {
-                require(['text!templates/' + name + '.html'], function (html) {
-                    tplCache[name] = _.template(html);
-                    callback(tplCache[name]);
-                });
-            } else {
-                callback(tplCache[name]);
-            }
-        };
-
-        var getEl = function (el) {
-            if (elCache[el] === undefined) {
-                elCache[el] = $(el);
-            }
-            return elCache[el];
-        };
-
-        exports.render = function (view, target, data) {
-            if (target === undefined) {
-                target = defaultTarget;
-            }
-            getTemplate(view, function (template) {
-                var $el = getEl(target);
-                $el.fadeOut('fast', function () {
-                    if (data.title !== undefined) {
-                        document.title = titlePrepend + titleSep + data.title;
-                    } else {
-                        document.title = titlePrepend;
-                    }
-                    $el.html(template(data));
-                    $el.fadeIn('fast');
-                });
-            });
-        };
-
-        return exports;
-    })();
+    var view = View();
 
     var urlDataCache = {};
     var ajaxify = function (url, state) {

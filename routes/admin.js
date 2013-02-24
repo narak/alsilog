@@ -3,6 +3,14 @@ var conf = require('../config'),
     view = require('../view-util'),
     alsiDate = require('../public/javascripts/lib/date');
 
+exports.container = function(req, res, next) {
+    if (req.headers.accept.indexOf('json') != -1) {
+        next();
+    } else {
+        view.render(req, res, conf.templates.container);
+    }
+};
+
 exports.index = function(req, res, next) {
     db.findAllBlogs(function(content) {
         for (var i = 0; i < content.length; i++) {
@@ -16,6 +24,6 @@ exports.slug = function(req, res, next) {
     db.getBySlug(req.params.slug, function(content) {
         content.date = alsiDate.formatDate(conf.dateFormat, content.timestamp);
         // Type relates directly to the template used.
-        view.json(req, res, conf.templates.pageEdit, content);
+        view.render(req, res, conf.templates.pageEdit, content);
     }, next);
 };

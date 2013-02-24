@@ -24,7 +24,11 @@ app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
   secret: "aef61884dffcfe026143916ac5ec1c88223670f6",
-  cookie: {httpOnly: true, secure: true},
+  cookie: {
+    httpOnly: true,
+    path: '/',
+    maxAge: null
+  },
   store: new RedisStore({
     host: conf.db['redis'].hostname,
     port: conf.db['redis'].port,
@@ -46,6 +50,7 @@ app.get('/admin/logout', auth.logoutUser);
 
 // Check if logged in on all admin/* routes.
 app.all('/admin*', auth.requireLogin);
+app.all('/admin*', admin.container);
 app.all('/admin', admin.index);
 app.get('/admin/:slug', admin.slug);
 
