@@ -1,5 +1,6 @@
 exports.render = function(req, res, name, content) {
-    if (req.headers.accept.indexOf('json') != -1) {
+    if (typeof req.headers.accept !== 'undefined' &&
+        req.headers.accept.indexOf('json') != -1) {
         res.json({
             content: content,
             view: name
@@ -10,7 +11,8 @@ exports.render = function(req, res, name, content) {
 };
 
 exports.json = function(req, res, name, content) {
-    if (req.headers.accept.indexOf('json') != -1) {
+    if (typeof req.headers.accept !== 'undefined' &&
+        req.headers.accept.indexOf('json') != -1) {
         res.json({
             content: content,
             view: name
